@@ -4,4 +4,4 @@ This repository contains the code to create a time series of vaccine coverage in
 
 The final datasets are available in the `data` directory in wide format (`fsa_ts.csv`) and long format (`fsa_ts_long.csv`).
 
-A brief report describes the data: `fsa_ts.Rmd`.
+A brief report describes the data: [click here to read as HTML](https://jeanpaulrsoucy.github.io/ices-vaccine-coverage-by-fsa-time-series/fsa_ts.html).
