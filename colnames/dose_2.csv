@@ -1,0 +1,107 @@
+old_name,new_name
+"% Vaccinated with both doses
+(All ages, including <12 and undocumented age)",dose_2
+"% Fully vaccinated
+(All ages, including <12 and undocumented age)",dose_2
+"% Fully vaccinated with at least 1 dose
+(Ages 85+)",dose_2_85_plus
+"% Fully vaccinated with at least 1 dose
+(Ages 80-84)",dose_2_80_84
+"% Fully vaccinated with at least 1 dose
+(Ages 75-79)",dose_2_75_79
+"% Fully vaccinated with at least 1 dose
+(Ages 70-74)",dose_2_70_74
+"% Fully vaccinated with at least 1 dose
+(Ages 65-69)",dose_2_65_69
+"% Fully vaccinated with at least 1 dose
+(Ages 60-64)",dose_2_60_64
+"% Fully vaccinated with at least 1 dose
+(Ages 55-59)",dose_2_55_59
+"% Fully vaccinated with at least 1 dose
+(Ages 50-54)",dose_2_50_54
+"% Fully vaccinated with at least 1 dose
+(Ages 45-49)",dose_2_45_49
+"% Fully vaccinated with at least 1 dose
+(Ages 40-44)",dose_2_40_44
+"% Fully vaccinated with at least 1 dose
+(Ages 35-39)",dose_2_35_39
+"% Fully vaccinated with at least 1 dose
+(Ages 30-34)",dose_2_30_34
+"% Fully vaccinated with at least 1 dose
+(Ages 25-29)",dose_2_25_29
+"% Fully vaccinated with at least 1 dose
+(Ages 18-24)",dose_2_18_24
+"% Fully vaccinated with at least 1 dose
+(Ages 16-17)",dose_2_16_17
+"% Fully vaccinated with at least 1 dose
+(Ages 12-15)",dose_2_12_15
+"% Fully vaccinated
+(All ages including <5 and undocumented age)",dose_2
+"% who received 2 doses
+(Ages 85+)",dose_2_85_plus
+"% who received 2 doses
+(Ages 80-84)",dose_2_80_84
+"% who received 2 doses
+(Ages 75-59)",dose_2_75_79
+"% who received 2 doses
+(Ages 70-74)",dose_2_70_74
+"% who received 2 doses
+(Ages 65-69)",dose_2_65_69
+"% who received 2 doses
+(Ages 60-64)",dose_2_60_64
+"% who received 2 doses
+(Ages 55-59)",dose_2_55_59
+"% who received 2 doses
+(Ages 50-54)",dose_2_50_54
+"% who received 2 doses
+(Ages 45-49)",dose_2_45_49
+"% who received 2 doses
+(Ages 40-44)",dose_2_40_44
+"% who received 2 doses
+(Ages 35-59)",dose_2_35_39
+"% who received 2 doses
+(Ages 30-34)",dose_2_30_34
+"% who received 2 doses
+(Ages 25-29)",dose_2_25_29
+"% who received 2 doses
+(Ages 18-24)",dose_2_18_24
+"% who received 2 doses
+(Ages 16-17)",dose_2_16_17
+"% who received 2 doses
+(Ages 12-15)",dose_2_12_15
+"% Vaccinated with at least 2 doses
+(All ages - including <5 and undocumented age)",dose_2
+"% Vaccinated with at least 2 doses
+(Ages 85+)",dose_2_85_plus
+"% Vaccinated with at least 2 doses
+(Ages 80-84)",dose_2_80_84
+"% Vaccinated with at least 2 doses
+(Ages 75-79)",dose_2_75_79
+"% Vaccinated with at least 2 doses
+(Ages 70-74)",dose_2_70_74
+"% Vaccinated with at least 2 doses
+(Ages 65-69)",dose_2_65_69
+"% Vaccinated with at least 2 doses
+(Ages 60-64)",dose_2_60_64
+"% Vaccinated with at least 2 doses
+(Ages 55-59)",dose_2_55_59
+"% Vaccinated with at least 2 doses
+(Ages 50-54)",dose_2_50_54
+"% Vaccinated with at least 2 doses
+(Ages 45-49)",dose_2_45_49
+"% Vaccinated with at least 2 doses
+(Ages 40-44)",dose_2_40_44
+"% Vaccinated with at least 2 doses
+(Ages 35-39)",dose_2_35_39
+"% Vaccinated with at least 2 doses
+(Ages 30-34)",dose_2_30_34
+"% Vaccinated with at least 2 doses
+(Ages 25-29)",dose_2_25_29
+"% Vaccinated with at least 2 doses
+(Ages 18-24)",dose_2_18_24
+"% Vaccinated with at least 2 doses
+(Ages 16-17)",dose_2_16_17
+"% Vaccinated with at least 2 doses
+(Ages 12-15)",dose_2_12_15
+"% Vaccinated with at least 2 doses
+(Ages 5-11)",dose_2_5_11
