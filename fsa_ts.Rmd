@@ -244,6 +244,132 @@ write.csv(ds, "data/fsa_ts.csv", row.names = FALSE)
 write.csv(ds_long, "data/fsa_ts_long.csv", row.names = FALSE)
 ```
 
+# Bonus dataset: Cumulative case, hospitalization & death rates by FSA
+
+A bonus dataset: the cumulative case, hospitalization and mortality rates by FSA. Additionally, whether the FSA was among the [114 identified for vaccine prioritization by the province in early April 2021](https://toronto.ctvnews.ca/full-list-of-ontario-neighbourhoods-where-the-covid-19-vaccine-will-be-available-to-those-18-1.5379755).
+
+A few notes about these data: from 2021-03-29 to 2021-05-10, hospitalizations and mortality were combined into a single metric; starting on 2021-05-17, these two metrics were disaggregated. Small cell sizes may be censored, which is represented as an NA in the dataset.
+
+```{r, message=FALSE, results='hide'}
+# copy file list
+files_chd <- files
+
+# drop x = 19 (2021-09-20), the next file x = 20 (2021-09-28) is just a corrected version of this first file
+files_chd <- files_chd[-19]
+
+# load coverage data from a file
+ds_chd <- lapply(seq_along(files_chd), function(x) {
+  # print file
+  cat(paste0(x, ": ", files_chd[x]), fill = TRUE)
+  # extract first column
+  X1 <- read_xlsx(files_chd[x], sheet = 3, range = "A1:A40", col_names = "X1") # don't skip leading blank rows
+  # extract date of data
+  d <- X1 %>%
+    filter(grepl("^Dates of vaccination", X1)) %>%
+    str_sub(-9) %>%
+    as.Date(format = "%d%b%Y") %>%
+    tibble(date = .)
+  # extract start position of data (leading blank rows are automatically skipped)
+  skip_rows <- grep("^FSA$", X1$X1) - 1
+  # extract data
+  chd <- read_xlsx(files_chd[x], sheet = 3, skip = skip_rows) %>%
+    # fix case numbers for first spreadsheet
+    {if (x == 1) {
+      mutate(., `COVID-19 cases\r\n(per 100)` = `COVID-19 cases\r\n(per 100)` * 100)
+      } else {
+        .
+        }} %>%
+    rename(any_of(c(
+      "fsa" = "FSA",
+      "cum_cases_per_100" = "COVID-19 cases\r\n(per 100)",
+      "cum_hospitalizations_deaths_per_1000" = "COVID-10 hospitalizations/deaths\r\n(per 1,000)",
+      "cum_hospitalizations_per_1000" = "COVID-19 hospitalizations\r\n(per 1,000)",
+      "cum_deaths_per_1000" = "COVID-19 deaths\r\n(per 1,000)"
+      ))) %>%
+    select(any_of(c(
+      "date",
+      "fsa",
+      "cum_cases_per_100",
+      "cum_hospitalizations_deaths_per_1000",
+      "cum_hospitalizations_per_1000",
+      "cum_deaths_per_1000"
+    )))
+  # join data
+  d <- bind_cols(d, chd)
+  # return data
+  d %>%
+    # convert all columns to numeric
+    # this includes turning suppressed/missing values to NA
+    mutate(across(!matches("^fsa$") & where(is.character), function(x) {
+      parse_number(x, na = c(".", "*", "Suppressed", "Suppressed due to data quality"))}))
+})
+
+# merge dataset
+ds_chd <- ds_chd %>%
+  bind_rows() %>%
+  # eliminate duplicates (e.g., 2021-12-10 and 2021-12-23 have identical but updated "terms of reference")
+  distinct()
+
+# list FSAs not represented in every unique dataset
+fsa_exclude <- table(ds_chd$fsa) %>% {.[. != max(.)]}
+
+# remove a few random FSAs that are only represented a few times
+ds_chd <- ds_chd %>%
+  filter(!fsa %in% names(fsa_exclude))
+
+# add hot spot identifier from dataset with date 2021-04-12
+ds_chd <- ds_chd %>%
+  left_join(
+    read_xlsx(files_chd[3], sheet = 3, skip = 24) %>%
+      transmute(fsa = FSA, hot_spot_fsa = ifelse(`Hot Spot Community` == "Yes", 1, 0)) %>%
+      replace_na(list(hot_spot_fsa = 0)),
+    by = "fsa"
+  ) %>%
+  select(
+    date,
+    fsa,
+    hot_spot_fsa,
+    cum_cases_per_100,
+    cum_hospitalizations_deaths_per_1000,
+    cum_hospitalizations_per_1000,
+    cum_deaths_per_1000
+  )
+
+# convert dataset to long
+ds_chd_long <- ds_chd %>%
+  pivot_longer(
+    cols = -c(date, fsa, hot_spot_fsa),
+    names_to = "metric",
+    values_to = "value"
+  )
+```
+
+These metrics are plotted below. First, for an example FSA:
+
+```{r, warning=FALSE, message=FALSE}
+ggplot(data = ds_chd_long %>% filter(fsa == "K0A"), mapping = aes(x = date, y = value)) +
+  geom_line(aes(group = fsa), alpha = 0.15) +
+  geom_smooth(method = "loess") +
+  facet_wrap(~metric, scales = "free") +
+  theme_pubclean()
+```
+
+Then, the whole dataset:
+
+```{r, warning=FALSE, message=FALSE}
+ggplot(data = ds_chd_long, mapping = aes(x = date, y = value)) +
+  geom_line(aes(group = fsa), alpha = 0.15) +
+  geom_smooth(method = "loess") +
+  facet_wrap(~metric, scales = "free") +
+  theme_pubclean()
+```
+
+```{r}
+# save dataset
+write.csv(ds_chd, "data/fsa_metrics_ts.csv", row.names = FALSE)
+write.csv(ds_chd_long, "data/fsa_metrics_ts_long.csv", row.names = FALSE)
+```
+
 # Appendix
 
 ## Data processing notes
